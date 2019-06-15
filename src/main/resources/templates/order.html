@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8">
+<title>Order</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="container" th:fragment="content">
+		<form action="http://formspree.io/chda98@bk.ru" method="post">
+			<div class="email">
+				<div class="form-group col-md-6">
+					<label for="inputEmail4"></label> <input type="email"
+						class="form-control" id="inputEmail4" name="name"
+						value="chda98@bk.ru">
+				</div>
+			</div>
+
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label for="inputEmail4">ФИО получателя</label> <input type="text"
+						class="form-control" id="inputEmail4" name="fio"
+						placeholder="Черёмушев Дмитрий Александрович">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="inputAddress">Адрес получателя</label> <input
+					type="text" class="form-control" id="inputAddress" name="address"
+					placeholder="пер. Ботанический, 1, кв. 103">
+			</div>
+
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label for="inputCity">Город</label> <input type="text"
+						class="form-control" id="inputCity" name="city"
+						placeholder="Одесса">
+				</div>
+				<div class="form-group col-md-4">
+					<label for="inputState">Страна</label> <select id="inputState"
+						class="form-control" name="country">
+						<option selected>Украина</option>
+						<option>Россия</option>
+						<option>Белорусь</option>
+						<option>Казахстан</option>
+						<option>Польша</option>
+						<option>Литва</option>
+						<option>Латвия</option>
+						<option>Эстония</option>
+						<option>Молдавия</option>
+						<option>Болгария</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="card">
+				<h4 class="card-title">Общая стоимость:</h4>
+				<h6 class="card-subtitle mb-2 text-muted" th:text="${price}">1</h6>
+				<input type="hidden" id="inputAddress" name="total-sum" value="1">
+			</div>
+			<div class="list-group">
+				<a href="/basket" class="list-group-item active">Список
+					выбранных книг</a>
+				<div class="list-group" th:each="book : ${book}">
+					<div class="list-group-item" th:text="${book.name}"></div>
+				</div>
+			</div>
+			<div class="selection">
+				<select name="chosen-books" size="4" multiple>
+					<option selected value="Книга 1"></option>
+					<option selected value="Книга 2"></option>
+					<option selected value="Книга 3"></option>
+					<option selected value="Книга 4"></option>
+				</select>
+			</div>
+
+			<button type="submit" class="btn btn-primary">Оформить заказ</button>
+
+		</form>
+
+	</div>
+
+</body>
+</html>

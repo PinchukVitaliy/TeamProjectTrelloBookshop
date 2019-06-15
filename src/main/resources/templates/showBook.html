@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8">
+
+<title>Инфо</title>
+</head>
+<body>
+	<div class="container" th:fragment="content">
+		<h1>Информация о книге</h1>
+		<div class="input-group mb-3  ">
+			<div class="input-group-prepend">
+				<span class="input-group-text">Картинка</span> <img
+					th:src="@{${bookInf.background}}"
+					style="width: 248px; height: 350px" alt="icon">
+				<div class="flex-column">
+					<form class="container" th:action="@{/books/favourite}"
+						method="POST">
+						<input type="text" name="idbook" th:value="${bookInf.id}" hidden />
+
+						<div class="input-group-prepend form-check">
+							<input th:if="${flag}" style="width: 25px; height: 25px;"
+								name="check" type="checkbox" class="form-check-input" checked />
+							<input th:unless="${flag}" style="width: 25px; height: 25px;"
+								name="check" type="checkbox" class="form-check-input" />
+							&#8195; <label style="font-size: 25px" class="form-check-label">Список
+								Ваших избранных книг</label>
+						</div>
+						<input type="submit" class=" btn btn-success" value="Сохранить">
+					</form>
+					<th:block sec:authorize="isAuthenticated()">
+						<form class="container" th:action="@{/basket/add}" method="POST">
+							<input type="text" name="book" th:value="${bookInf.id}" hidden />
+							<input type="submit" class=" btn btn-success"
+								value="Добавить в корзину">
+						</form>
+					<form role="form" class="my-lg-4" id="sendAddress"
+						th:action=@{/books/addRate} method="post">
+						<input type="text" name="idbook" th:value="${bookInf.id}" hidden />
+						<select class="form-control" name="rateOnBook"
+							onchange='this.form.submit()'>
+							<option disabled selected>Поставить рейтинг книги</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</form>
+					</th:block>
+				</div>
+
+			</div>
+
+
+
+		</div>
+
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text">Название</span>
+			</div>
+			<input type="text" class="form-control" th:field="*{bookInf.name}"
+				readonly>
+		</div>
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text">Год</span>
+			</div>
+			<input type="text" class="form-control" th:field="*{bookInf.year}"
+				readonly>
+		</div>
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text">Издатель</span>
+			</div>
+			<input type="text" class="form-control"
+				th:field="*{bookInf.publisher.name}" readonly>
+		</div>
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text">Цена</span>
+			</div>
+			<input type="text" class="form-control" th:field="*{bookInf.price}"
+				readonly>
+		</div>
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text">Рейтинг</span>
+			</div>
+			<input type="text" class="form-control" th:field="*{bookInf.rate}"
+				readonly>
+		</div>
+		<div class="input-group mb-3">
+			<input class="hide" id="hd-1" type="checkbox"> <label
+				for="hd-1"><b>Авторы</b></label>
+			<div>
+				<div th:each="author : ${bookInf.authors}">
+					<input type="text" class="form-control" th:value="${author.name}"
+						readonly>
+				</div>
+			</div>
+		</div>
+		<div class="input-group mb-3">
+			<input class="hide" id="hd-2" type="checkbox"> <label
+				for="hd-2"><b>Жанры</b></label>
+			<div>
+				<div th:each="genre : ${bookInf.genres}">
+					<input type="text" path="genres" class="form-control"
+						th:value="${genre.name}" readonly>
+				</div>
+			</div>
+		</div>
+		<a sec:authorize="hasRole('admin')" class="btn btn-info"
+			th:href="@{'/books/editBook/' + ${bookInf.id}}">Изменить</a><br>
+		<br> <a href="/"><input type="button" class="btn btn-success"
+			value="На главную" /></a> <br> <br>
+	</div>
+
+</body>
+</html>
